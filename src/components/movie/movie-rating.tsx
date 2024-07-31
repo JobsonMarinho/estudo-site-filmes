@@ -1,8 +1,10 @@
+import { memo } from 'react'
+
 export interface MovieRatingProps {
   rating: number
 }
 
-export default function rating({ rating }: MovieRatingProps) {
+function MovieRating({ rating }: MovieRatingProps) {
   const average = Math.round(rating / 2)
 
   return (
@@ -31,3 +33,5 @@ export default function rating({ rating }: MovieRatingProps) {
     </div>
   )
 }
+
+export default memo(MovieRating)

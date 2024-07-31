@@ -1,6 +1,7 @@
 import { Search } from 'lucide-react'
+import { memo } from 'react'
 
-export default function Navbar() {
+function Navbar() {
   return (
     <nav className="bg-[#0F172A] px-4 py-6 border-b-2 border-[#0a101d] shadow-md drop-shadow-md flex justify-between items-center"
     >
@@ -23,3 +24,5 @@ export default function Navbar() {
     </nav >
   )
 }
+
+export default memo(Navbar)

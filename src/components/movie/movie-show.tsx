@@ -3,7 +3,7 @@ import type { Trailer } from '@/entities/Trailer'
 import { AnimatePresence, motion } from 'framer-motion'
 import MovieRating from './movie-rating'
 import { cn } from '@/lib/utils'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import {
   VITE_TMDB_API_URL as TMDB_API_URL,
   VITE_TMDB_API_TOKEN as TMDB_API_TOKEN
@@ -14,13 +14,12 @@ type MovieShowProps = {
   setSelectedMovie: (movie: Movie | null) => void
 }
 
-export default function MovieShow(
+function MovieShow(
   {
     selectedMovie,
     setSelectedMovie
   }: MovieShowProps
 ) {
-  // TRAILERS
   const [trailers, setTrailers] = useState<Trailer[]>([])
   const [currentTrailer, setCurrentTrailer] = useState<Trailer | null>(null)
 
@@ -47,15 +46,10 @@ export default function MovieShow(
     }
   }, [selectedMovie])
 
-
   return <AnimatePresence>
     {selectedMovie && (
       <motion.div
-        exit={
-          {
-            opacity: 0
-          }
-        }
+        exit={{ opacity: 0 }}
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w500${selectedMovie.backdrop_path})`,
           backgroundSize: 'cover',
@@ -103,14 +97,8 @@ export default function MovieShow(
         </motion.div>
         {trailers && (
           <motion.div
-            initial={{
-              scale: 0,
-              opacity: 0
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1 }}
             className='flex flex-col gap-4'>
             {currentTrailer && (
@@ -124,14 +112,8 @@ export default function MovieShow(
               />
             )}
             <motion.div
-              initial={{
-                y: -100,
-                opacity: 0
-              }}
-              animate={{
-                y: 0,
-                opacity: 1,
-              }}
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
               className='flex flex-col gap-4'>
               {trailers.map(trailer => (
                 <motion.div
@@ -150,3 +132,5 @@ export default function MovieShow(
     )}
   </AnimatePresence>
 }
+
+export default memo(MovieShow)
